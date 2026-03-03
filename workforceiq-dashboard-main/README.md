@@ -1,73 +1,82 @@
-# Welcome to your Lovable project
+# WorkforceIQ Dashboard
 
-## Project info
+WorkforceIQ is an advanced AI-powered HR and candidate management dashboard designed to streamline the hiring process and provide intelligent insights into team performance, attrition, and career development.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
 
-## How can I edit this code?
+- **Hiring Intelligence**: Automatically parse uploaded resumes (PDF/DOCX) and evaluate candidates using OpenAI's GPT-4o model.
+- **AI Agents**: Specialized agents for different HR domains:
+  - *Attrition Agent*: Analyzes retention risks and provides actionable insights.
+  - *Performance Agent*: Evaluates employee performance metrics.
+  - *Career Agent*: Suggests career paths and development opportunities.
+  - *Explainability*: Provides transparent reasoning for AI-driven hiring recommendations.
+- **Secure Data Storage**: Integrated with Firebase Authentication and Firestore/Realtime Database for secure and reliable candidate data persistence.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+### Frontend
+- **React** (Vite)
+- **TypeScript**
+- **Tailwind CSS**
+- **shadcn/ui**
+- **Firebase** (Auth, Firestore)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### Backend
+- **FastAPI** (Python)
+- **OpenAI API** (GPT-4o for intelligent analysis)
+- **PyMuPDF / python-docx** (Resume parsing)
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
+- Node.js (v18+)
+- Python (3.9+)
+- Firebase Project configured
+- OpenAI API Key
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Backend Setup
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Set up environment variables:
+   Create a `.env` file in the `backend` directory (do not commit this file):
+   ```env
+   OPENAI_API_KEY=sk-your-openai-key
+   OPENAI_MODEL=gpt-4o
+   ```
+4. Start the FastAPI server:
+   ```bash
+   uvicorn main:app --reload --port 8000
+   ```
+   The API will be available at `http://localhost:8000`.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Frontend Setup
+1. From the project root, install Node dependencies:
+   ```bash
+   npm install
+   ```
+2. Set up environment variables:
+   Ensure you have your Firebase configuration set up in `.env.local` or environment variables for Vite:
+   ```env
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   VITE_API_URL=http://localhost:8000/api
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The frontend will be available at `http://localhost:8080` (or `5173`).
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Project Structure
+- `/src`: React frontend application code (Pages, Components, Context, API handlers).
+- `/backend`: FastAPI application handles AI routing, candidate resume parsing, and intelligent evaluations using OpenAI.
