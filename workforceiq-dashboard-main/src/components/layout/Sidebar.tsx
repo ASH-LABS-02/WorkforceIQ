@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Users, Brain, TrendingUp, AlertTriangle,
   Target, BarChart3, Eye, FileText, Settings, LogOut, ChevronLeft,
-  ChevronRight, Upload, Zap
+  ChevronRight, Upload, Zap, Briefcase, GraduationCap
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { UserRole } from '@/types/auth';
@@ -18,9 +18,12 @@ const navItems = [
   { to: '/agents/hiring-intelligence', icon: Brain, label: 'Hiring Intelligence', roles: ['admin', 'hr', 'manager', 'recruiter'] },
   { to: '/agents/performance', icon: TrendingUp, label: 'Performance', roles: ['admin', 'hr', 'manager', 'recruiter'] },
   { to: '/agents/attrition', icon: AlertTriangle, label: 'Attrition', roles: ['admin', 'hr', 'manager', 'recruiter'] },
-  { to: '/agents/career', icon: Target, label: 'Career Path', roles: ['admin', 'hr', 'manager', 'recruiter'] },
+  { to: '/agents/career', icon: Target, label: 'Career Path', roles: ['admin', 'hr', 'manager', 'recruiter', 'user'] },
+  { to: '/agents/interview', icon: GraduationCap, label: 'Interview Prep', roles: ['admin', 'hr', 'manager', 'recruiter', 'user'] },
   { to: '/agents/workforce-analytics', icon: BarChart3, label: 'Analytics', roles: ['admin', 'hr', 'manager', 'recruiter'] },
   { to: '/agents/explainability', icon: Eye, label: 'Explainability', roles: ['admin', 'hr', 'manager', 'recruiter'] },
+  { type: 'divider' as const, label: 'Job Management', roles: ['admin', 'hr', 'manager', 'recruiter', 'user'] },
+  { to: '/jobs', icon: Briefcase, label: 'Job Board', roles: ['admin', 'hr', 'manager', 'recruiter', 'user'] },
   { type: 'divider' as const, label: 'System', roles: ['admin', 'hr', 'manager', 'recruiter'] },
   { to: '/reports', icon: FileText, label: 'Reports', roles: ['admin', 'hr', 'manager', 'recruiter'] },
   { to: '/settings', icon: Settings, label: 'Settings', roles: ['admin', 'hr', 'manager', 'recruiter', 'user'] },

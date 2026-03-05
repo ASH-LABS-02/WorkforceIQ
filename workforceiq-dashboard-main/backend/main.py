@@ -3,13 +3,14 @@ WorkforceIQ Backend — FastAPI Application
 Hiring Intelligent Agent powered by OpenAI GPT-4o
 """
 import os
+from dotenv import load_dotenv
+
+# Load environment variables FIRST before importing any routers which might evaluate env vars
+load_dotenv()
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
 from routers import hiring, agents
-
-# Load environment variables
-load_dotenv()
 
 app = FastAPI(
     title="WorkforceIQ Hiring Agent API",

@@ -7,8 +7,9 @@ from agents.attrition_agent import run_attrition_agent
 from agents.performance_agent import run_performance_agent
 from agents.career_agent import run_career_agent
 from agents.explainability_agent import run_explainability_agent
+from agents.interview_agent import run_interview_agent
 from models.schemas import (
-    AttritionResponse, PerformanceResponse, CareerResponse, ExplainabilityResponse
+    AttritionResponse, PerformanceResponse, CareerResponse, ExplainabilityResponse, InterviewResponse
 )
 from services.firestore_service import db_service
 from services.auth_service import verify_token
@@ -108,3 +109,18 @@ async def explainability_analysis(candidate_id: str):
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Explainability analysis failed: {str(e)}")
+
+
+# ─── Interview ────────────────────────────────────────────────────────────────
+
+@router.post("/interview/{candidate_id}", response_model=InterviewResponse)
+async def interview_analysis(candidate_id: str):
+    """Generate customized interview questions for a candidate."""
+    try:
+        profile = await _get_profile(candidate_id)
+        return await run_interview_agent(profile)
+    except HTTPException:
+        raise
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Interview generation failed: {str(e)}")

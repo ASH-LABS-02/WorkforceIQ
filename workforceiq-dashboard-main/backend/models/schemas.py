@@ -138,3 +138,16 @@ class ExplainabilityResponse(BaseModel):
     training_data: str
     accuracy_metrics: str
     transparency_summary: str
+
+
+# ─── Interview Agent Models ───────────────────────────────────────────────────
+
+class InterviewQuestion(BaseModel):
+    question: str
+    difficulty: str               # "Easy" | "Medium" | "Hard"
+    topic: str
+    hint: str
+
+class InterviewResponse(BaseModel):
+    questions: list[InterviewQuestion]
+    overall_advice: str

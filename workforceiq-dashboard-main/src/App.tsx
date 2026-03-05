@@ -20,6 +20,8 @@ import Explainability from "@/pages/Explainability";
 import Reports from "@/pages/Reports";
 import SettingsPage from "@/pages/SettingsPage";
 import NotFound from "@/pages/NotFound";
+import Jobs from "@/pages/Jobs";
+import InterviewPrep from "@/pages/InterviewPrep";
 
 const queryClient = new QueryClient();
 
@@ -60,6 +62,7 @@ const App = () => (
                     <Candidates />
                   </ProtectedRoute>
                 } />
+                <Route path="/jobs" element={<Jobs />} />
 
                 {/* Shared Routes */}
                 <Route path="/upload" element={<ResumeUpload />} />
@@ -81,8 +84,13 @@ const App = () => (
                   </ProtectedRoute>
                 } />
                 <Route path="/agents/career" element={
-                  <ProtectedRoute roles={['admin', 'hr', 'manager', 'recruiter']}>
+                  <ProtectedRoute roles={['admin', 'hr', 'manager', 'recruiter', 'user']}>
                     <CareerAgent />
+                  </ProtectedRoute>
+                } />
+                <Route path="/agents/interview" element={
+                  <ProtectedRoute roles={['admin', 'hr', 'manager', 'recruiter', 'user']}>
+                    <InterviewPrep />
                   </ProtectedRoute>
                 } />
                 <Route path="/agents/workforce-analytics" element={
