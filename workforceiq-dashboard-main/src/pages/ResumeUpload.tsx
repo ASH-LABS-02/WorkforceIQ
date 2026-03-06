@@ -18,7 +18,7 @@ interface UploadedFile {
 
 const ALLOWED_TYPES = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_URL || '';
 
 const PIPELINE_STAGES = [
   'File Validation',

@@ -1,8 +1,19 @@
 {
-  "rewrites": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/main.py"
+      "src": "/api/(.*)",
+      "dest": "/api/main.py"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
