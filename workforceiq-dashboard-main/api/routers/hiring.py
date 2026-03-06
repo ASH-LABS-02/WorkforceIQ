@@ -15,14 +15,13 @@ import traceback
 router = APIRouter(
     prefix="/api/candidates", 
     tags=["hiring"],
-    dependencies=[Depends(verify_token)]
 )
 
 # Session-only fallback for when Firestore is not configured
 _session_memory: dict[str, HiringAnalysis] = {}
 
 
-@router.post("/upload", response_model=UploadResponse)
+@router.post("/upload", response_model=UploadResponse, dependencies=[Depends(verify_token)])
 async def upload_resume(file: UploadFile = File(...)):
     """
     Upload a resume (PDF or DOCX) and run the full AI hiring analysis pipeline.

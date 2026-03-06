@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { api } from '@/lib/api';
 
 const API_BASE = import.meta.env.VITE_API_URL || '';
 
@@ -63,18 +64,15 @@ export default function HiringIntelligence() {
   const fetchCandidates = useCallback(async () => {
     setLoading(true);
     try {
-      // 1. Try live backend
-      const res = await fetch(`${API_BASE}/api/candidates`, { signal: AbortSignal.timeout(4000) });
-      if (res.ok) {
-        const data: HiringAnalysis[] = await res.json();
-        if (data.length > 0) {
-          setCandidates(data);
-          setLoading(false);
-          return;
-        }
+      // 1. Try live backend with auth token
+      const data = await api.get<HiringAnalysis[]>('/api/candidates');
+      if (data && data.length > 0) {
+        setCandidates(data);
+        setLoading(false);
+        return;
       }
     } catch {
-      // Backend unavailable — fall through to localStorage
+      // Backend unavailable or auth error — fall through to localStorage
     }
 
     // 2. Fall back to localStorage (cached from uploads)

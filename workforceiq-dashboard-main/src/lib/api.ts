@@ -41,7 +41,10 @@ async function request<T>(endpoint: string, options: ApiOptions = {}): Promise<T
   if (response.status === 401) {
     localStorage.removeItem('wiq_token');
     localStorage.removeItem('wiq_user');
-    window.location.href = '/login';
+    // Only redirect if not already on login page to prevent infinite redirect loops
+    if (!window.location.pathname.includes('/login')) {
+      window.location.href = '/login';
+    }
     throw new ApiError(401, 'Session expired');
   }
 
