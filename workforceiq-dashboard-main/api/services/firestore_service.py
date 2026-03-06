@@ -16,7 +16,8 @@ class FirestoreService:
     def _initialize(self):
         try:
             # Check for service account key file
-            cred_path = os.getenv("FIREBASE_SERVICE_ACCOUNT") or "serviceAccountKey.json"
+            default_key_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "serviceAccountKey.json")
+            cred_path = os.getenv("FIREBASE_SERVICE_ACCOUNT") or default_key_path
             
             if os.path.exists(cred_path):
                 cred = credentials.Certificate(cred_path)
