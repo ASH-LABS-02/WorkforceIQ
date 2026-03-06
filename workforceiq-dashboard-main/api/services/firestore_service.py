@@ -15,20 +15,33 @@ class FirestoreService:
 
     def _initialize(self):
         try:
-            # Check for service account key file
-            default_key_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "serviceAccountKey.json")
-            cred_path = os.getenv("FIREBASE_SERVICE_ACCOUNT") or default_key_path
-            
-            if os.path.exists(cred_path):
-                cred = credentials.Certificate(cred_path)
+            cred = None
+
+            # Option 1: JSON string in env var (best for Vercel/serverless)
+            sa_json = os.getenv("FIREBASE_SERVICE_ACCOUNT_JSON")
+            if sa_json:
+                import json
+                cred = credentials.Certificate(json.loads(sa_json))
+                logger.info("Firebase credentials loaded from FIREBASE_SERVICE_ACCOUNT_JSON env var.")
+            else:
+                # Option 2: File path (local dev fallback)
+                default_key_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "serviceAccountKey.json")
+                cred_path = os.getenv("FIREBASE_SERVICE_ACCOUNT") or default_key_path
+
+                if os.path.exists(cred_path):
+                    cred = credentials.Certificate(cred_path)
+                    logger.info(f"Firebase credentials loaded from file: {cred_path}")
+                else:
+                    logger.warning(f"No Firebase credentials found. Firestore will be disabled.")
+
+            if cred:
                 try:
                     firebase_admin.get_app()
                 except ValueError:
                     firebase_admin.initialize_app(cred)
                 self.db = firestore.client()
                 logger.info("Firebase Firestore initialized successfully.")
-            else:
-                logger.warning(f"Firebase service account key not found at {cred_path}. Firestore will be disabled.")
+
         except Exception as e:
             logger.error(f"Failed to initialize Firebase: {str(e)}")
             self.db = None
